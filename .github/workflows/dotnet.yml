@@ -1,0 +1,24 @@
+﻿name: .NET
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+          source-url: https://nuget.pkg.github.com/sirrandoo/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Build
+        run: dotnet build CommonLib.ExceptionParser/CommonLib.ExceptionParser.csproj --configuration Release
+      - name: Pack
+        run: dotnet pack CommonLib.ExceptionParser/CommonLib.ExceptionParser.csproj --output nuget-packages --configuration Release
+      - name: Push
+        run: dotnet nuget push **/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/sirrandoo/index.json
