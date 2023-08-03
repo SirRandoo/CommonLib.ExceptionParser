@@ -13,6 +13,8 @@ jobs:
         with:
           dotnet-version: 7.0.x
           source-url: https://nuget.pkg.github.com/sirrandoo/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: dotnet build --configuration Release CommonLib.ExceptionParser/CommonLib.ExceptionParser.csproj
       - name: Create the package
         run: dotnet pack --configuration Release CommonLib.ExceptionParser/CommonLib.ExceptionParser.csproj
