@@ -1,16 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    
+
     <PropertyGroup>
         <Nullable>enable</Nullable>
         <Authors>SirRandoo</Authors>
         <LangVersion>latest</LangVersion>
         <RepositoryType>git</RepositoryType>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <TargetFramework>net7.0</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Copyright>MIT Copyright (c) 2023 SirRandoo</Copyright>
         <RepositoryUrl>https://github.com/sirrandoo/CommonLib.ExceptionParser</RepositoryUrl>
         <Description>A library for parsing C# exceptions with support for inner exceptions.</Description>
+        <TargetFrameworks>net7.0;net48</TargetFrameworks>
+        <Version>1.1.0</Version>
     </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="System.Memory" Version="4.5.5" Condition="'$(TargetFramework)' == 'net48'" />
+    </ItemGroup>
 
 </Project>

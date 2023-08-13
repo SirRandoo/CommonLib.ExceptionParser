@@ -1,7 +1,12 @@
-﻿namespace CommonLib.ExceptionParser;
+﻿using System;
+using System.Collections.Generic;
+
+namespace CommonLib.ExceptionParser;
 
 public static class ExceptionParser
 {
+    private const string ExceptionText = "Exception";
+
     private static bool IsException(ReadOnlySpan<char> span)
     {
         for (var i = 0; i < span.Length; i++)
@@ -11,10 +16,17 @@ public static class ExceptionParser
                 return false;
             }
 
-            if (span.Slice(i, 8).Equals("Exception", StringComparison.Ordinal))
+        #if NET7_0_OR_GREATER
+            if (span.Slice(i, 8).Equals(ExceptionText, StringComparison.Ordinal))
             {
                 return true;
             }
+        #else
+            if (span.Slice(i, 8) == ExceptionText.AsSpan())
+            {
+                return true;
+            }
+        #endif
         }
 
         return false;
@@ -154,7 +166,7 @@ public static class ExceptionParser
         int innerExceptionIndex = span.IndexOf("--->".AsSpan());
         int end = innerExceptionIndex > 0 ? innerExceptionIndex : span.Length;
 
-        ReadOnlySpan<char> chunk = span[..end];
+        ReadOnlySpan<char> chunk = span.Slice(0, end);
 
         for (var i = 0; i < chunk.Length; i++)
         {
@@ -203,7 +215,7 @@ public static class ExceptionParser
 
         if (string.IsNullOrEmpty(root.Message))
         {
-            root.Message = chunk[boundaryStart..].Trim().ToString();
+            root.Message = chunk.Slice(boundaryStart).Trim().ToString();
         }
 
         if (innerExceptionIndex > 0)
@@ -366,12 +378,12 @@ public static class ExceptionParser
         if (string.IsNullOrEmpty(type) && typeEnd > 0)
         {
             // There was no "at " prior to the type.
-            ReadOnlySpan<char> chunk = span[..typeEnd];
+            ReadOnlySpan<char> chunk = span.Slice(0, typeEnd);
 
             if (chunk.StartsWith("(wrapper managed-to-native)".AsSpan()))
             {
                 isNativeWrapper = true;
-                chunk = chunk[(chunk.IndexOf(' ') + 1)..];
+                chunk = chunk.Slice(chunk.IndexOf(' '));
             }
 
             type = chunk.ToString();
@@ -398,7 +410,7 @@ public static class ExceptionParser
 
         if (spaceIndex > 0) // We have a parameter name.
         {
-            typeSpan = span[..spaceIndex];
+            typeSpan = span.Slice(0, spaceIndex);
             paramNameSpan = span.Slice(spaceIndex + 1, span.Length - (spaceIndex + 1));
         }
         else
@@ -411,7 +423,7 @@ public static class ExceptionParser
         if (genericIndex > 0 && span[genericIndex] == '[' && span[genericIndex + 1] != ']')
         {
             genericSpan = typeSpan.Slice(genericIndex + 1, typeSpan.Length - (genericIndex + 1));
-            typeSpan = typeSpan[..(genericIndex - 1)];
+            typeSpan = typeSpan.Slice(0, genericIndex - 1);
         }
 
         return new ExceptionParameter { Type = typeSpan.ToString(), GenericParameters = ParseGenerics(genericSpan), Name = paramNameSpan.ToString() };
@@ -440,7 +452,7 @@ public static class ExceptionParser
 
         if (span.Length - boundaryStart > 0)
         {
-            items.Add(span[boundaryStart..].ToString());
+            items.Add(span.Slice(boundaryStart).ToString());
         }
 
         return items.ToArray();
