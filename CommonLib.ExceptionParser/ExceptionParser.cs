@@ -96,7 +96,6 @@ public static class ExceptionParser
             return null;
         }
 
-        var iterations = 0;
         int index = span.Length - 1;
         List<ExceptionMethod> frames = new();
 
@@ -107,9 +106,8 @@ public static class ExceptionParser
         {
             ReadOnlySpan<char> lineSpan = GetLineSpanReversed(span, index);
 
-            if (lineSpan.Length <= 0 || iterations > 100 || current is null)
+            if (lineSpan.Length <= 0 || current is null)
             {
-                // This is really ever going to parse 100+ line exceptions?
                 break;
             }
 
@@ -125,7 +123,6 @@ public static class ExceptionParser
 
                 if (method is null)
                 {
-                    iterations++;
                     index -= lineSpan.Length + 2;
 
                     continue;
@@ -134,7 +131,6 @@ public static class ExceptionParser
                 frames.Add(method);
             }
 
-            iterations++;
             index -= lineSpan.Length + 2;
         }
 
