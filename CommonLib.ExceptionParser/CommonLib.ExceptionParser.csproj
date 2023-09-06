@@ -13,8 +13,8 @@
         <Version>1.1.0</Version>
     </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="System.Memory" Version="4.5.5" Condition="'$(TargetFramework)' == 'net48'" />
+    <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+        <PackageReference Include="System.Memory" Version="4.5.5" />
     </ItemGroup>
 
 </Project>

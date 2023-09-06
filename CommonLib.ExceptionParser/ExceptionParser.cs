@@ -16,17 +16,10 @@ public static class ExceptionParser
                 return false;
             }
 
-        #if NET7_0_OR_GREATER
-            if (span.Slice(i, 8).Equals(ExceptionText, StringComparison.Ordinal))
+            if (span.Slice(i, 8).Equals(ExceptionText.AsSpan(), StringComparison.Ordinal))
             {
                 return true;
             }
-        #else
-            if (span.Slice(i, 8) == ExceptionText.AsSpan())
-            {
-                return true;
-            }
-        #endif
         }
 
         return false;
