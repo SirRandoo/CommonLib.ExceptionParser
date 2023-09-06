@@ -11,12 +11,12 @@ public static class ExceptionParser
     {
         for (var i = 0; i < span.Length; i++)
         {
-            if (i + 8 >= span.Length)
+            if (i + 9 >= span.Length)
             {
                 return false;
             }
 
-            if (span.Slice(i, 8).Equals(ExceptionText.AsSpan(), StringComparison.Ordinal))
+            if (span.Slice(i, 9).Equals(ExceptionText.AsSpan(), StringComparison.Ordinal))
             {
                 return true;
             }
