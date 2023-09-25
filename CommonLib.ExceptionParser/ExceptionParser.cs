@@ -397,7 +397,7 @@ public static class ExceptionParser
 
         if (genericIndex > 0 && span[genericIndex] == '[' && span[genericIndex + 1] != ']')
         {
-            genericSpan = typeSpan.Slice(genericIndex + 1, typeSpan.Length - (genericIndex + 1));
+            genericSpan = typeSpan.Slice(genericIndex + 1, typeSpan.Length - (genericIndex + 2));
             typeSpan = typeSpan.Slice(0, genericIndex - 1);
         }
 
