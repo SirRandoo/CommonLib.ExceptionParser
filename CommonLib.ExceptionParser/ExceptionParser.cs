@@ -290,7 +290,7 @@ public static class ExceptionParser
 
                     break;
                 case '[' when ilOffsetEnd > 0:
-                    ilOffset = span.Slice(i + 1, ilOffsetEnd - i + 1).Trim().ToString();
+                    ilOffset = span.Slice(i + 1, ilOffsetEnd - i).Trim().ToString();
                     ilOffsetEnd = -2;
 
                     break;
