@@ -36,4 +36,9 @@ public record ExceptionMethod
     ///     in a natively compiled library.
     /// </summary>
     public bool IsNativeWrapper { get; set; }
+
+    /// <summary>
+    ///     Whether the method was a dynamic method.
+    /// </summary>
+    public bool IsDynamicMethod { get; set; }
 }

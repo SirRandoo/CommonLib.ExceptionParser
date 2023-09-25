@@ -249,21 +249,17 @@ public static class ExceptionParser
         // before the method's name sequence.
         int typeEnd = -1;
 
-        // Used to track where the method's "wrapper" status ends.
-        // This is typically towards the beginning of the line after "at".
-        int wrapperEnd = -1;
-
         // State booleans used to track the next value that's being parsed.
         // This could be replaced with an enum.
         var methodNext = false;
         var typeNext = false;
-        var wrapperNext = false;
 
         string method = null!;
         string type = null!;
         string ilOffset = null!;
         string[] generics = Array.Empty<string>();
-        var isNativeWrapper = false;
+        bool isNativeWrapper = span.StartsWith("  at (wrapper managed-to-native)".AsSpan());
+        bool isDynamicMethod = span.StartsWith("  at (wrapper dynamic-method)".AsSpan());
         List<ExceptionParameter> @params = new();
 
         for (int i = span.Length - 1; i >= 0; i--)
@@ -287,17 +283,6 @@ public static class ExceptionParser
                 case ' ' when typeNext:
                     type = span.Slice(i + 1, typeEnd - i).Trim().ToString();
                     typeNext = false;
-                    wrapperNext = true;
-                    wrapperEnd = i - 1;
-
-                    break;
-                case ' ' when wrapperNext:
-                    ReadOnlySpan<char> chunk = span.Slice(i + 1, wrapperEnd - i).Trim();
-
-                    if (chunk.StartsWith("(wrapper managed-to-native)".AsSpan()))
-                    {
-                        isNativeWrapper = true;
-                    }
 
                     break;
                 case ']' when ilOffsetEnd == -1 && paramEnd == -1:
