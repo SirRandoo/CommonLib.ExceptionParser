@@ -370,7 +370,8 @@ public static class ExceptionParser
             IlOffset = ilOffset,
             GenericParameters = generics,
             Parameters = @params.ToArray(),
-            IsNativeWrapper = isNativeWrapper
+            IsNativeWrapper = isNativeWrapper,
+            IsDynamicMethod = isDynamicMethod
         };
     }
 
