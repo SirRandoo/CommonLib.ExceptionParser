@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLib.ExceptionParser", "CommonLib.ExceptionParser\CommonLib.ExceptionParser.csproj", "{133A609A-9805-4570-AB20-6F6FBE84AAD5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLib.ExceptionParser.Tests", "CommonLib.ExceptionParser.Tests\CommonLib.ExceptionParser.Tests.csproj", "{C64DAEC4-F503-4293-A205-4BF364F0C001}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{133A609A-9805-4570-AB20-6F6FBE84AAD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{133A609A-9805-4570-AB20-6F6FBE84AAD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{133A609A-9805-4570-AB20-6F6FBE84AAD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C64DAEC4-F503-4293-A205-4BF364F0C001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C64DAEC4-F503-4293-A205-4BF364F0C001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C64DAEC4-F503-4293-A205-4BF364F0C001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C64DAEC4-F503-4293-A205-4BF364F0C001}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
