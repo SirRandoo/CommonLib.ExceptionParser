@@ -353,11 +353,11 @@ public static class ExceptionParser
         {
             // There was no "at " prior to the type.
             ReadOnlySpan<char> chunk = span.Slice(0, typeEnd);
+            int parenthesisIndex = chunk.IndexOf("(".AsSpan(), StringComparison.Ordinal);
 
-            if (chunk.StartsWith("(wrapper managed-to-native)".AsSpan()))
+            if (parenthesisIndex > 0)
             {
-                isNativeWrapper = true;
-                chunk = chunk.Slice(chunk.IndexOf(' '));
+                chunk = chunk.Slice(chunk.IndexOf(")".AsSpan(), StringComparison.Ordinal));
             }
 
             type = chunk.ToString();
