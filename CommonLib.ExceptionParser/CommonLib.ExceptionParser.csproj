@@ -10,7 +10,7 @@
         <RepositoryUrl>https://github.com/sirrandoo/CommonLib.ExceptionParser</RepositoryUrl>
         <Description>A library for parsing C# exceptions with support for inner exceptions.</Description>
         <TargetFrameworks>net7.0;net48</TargetFrameworks>
-        <Version>1.1.0</Version>
+        <Version>1.2.0</Version>
     </PropertyGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
