@@ -340,7 +340,7 @@ public static class ExceptionParser
 
                     break;
                 case '[' when genericEnd > 0:
-                    generics = ParseGenerics(span.Slice(i + 1, genericEnd - (i + 1)));
+                    generics = ParseGenerics(span.Slice(i + 1, genericEnd - i));
                     genericEnd = -2;
                     methodEnd = i - 1;
                     methodNext = true;
