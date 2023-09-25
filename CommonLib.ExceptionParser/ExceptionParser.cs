@@ -266,7 +266,7 @@ public static class ExceptionParser
         {
             switch (span[i])
             {
-                case '.' when methodNext:
+                case '.' when methodNext && span[i - 1] != '.':
                     int end = methodEnd - i;
 
                     if (span[end] == '(')
